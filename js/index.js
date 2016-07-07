@@ -32,6 +32,7 @@ function advScanFunc() {
   advTimer = setTimeout(advScanFunc, 600); 
 }
     
+//----------------------------------------------------------------
 var app = {
   initialize: function() {
     console.log("initialize()");
@@ -48,15 +49,18 @@ var app = {
     console.log("bindEvents()");
     document.addEventListener('deviceready', this.onDeviceReady, false);
     openURL.addEventListener('touchend', this.tappedImage, false);
-    iBeaconButton.addEventListener('touchstart', this.ibeaconPage, false);
-    eddystoneButton.addEventListener('touchstart', this.eddystonePage, false);
-    accessControlButton.addEventListener('touchstart', this.accessControlPage, false);
-    generalConfigButton.addEventListener('touchstart', this.generalConfigPage, false);
+
+    iBeaconButton.addEventListener('touchend', this.ibeaconPage, false);
+    eddystoneButton.addEventListener('touchend', this.eddystonePage, false);
+    accessControlButton.addEventListener('touchend', this.accessControlPage, false);
+    generalConfigButton.addEventListener('touchend', this.generalConfigPage, false);
+
     exit5Button.addEventListener('touchend', this.servicePage, false);
     exit4Button.addEventListener('touchend', this.servicePage, false);
     exit3Button.addEventListener('touchend', this.servicePage, false);
     exit2Button.addEventListener('touchend', this.servicePage, false);
     exitButton.addEventListener('touchend', this.disconnect, false);
+
     scanRescanButton.addEventListener('touchstart', this.refreshDeviceList, false);
     scanDeviceList.addEventListener('touchstart', this.tappedList, false);
   },
@@ -127,7 +131,7 @@ var app = {
     var ref = window.open('http://www.iblio.net', '_blank', 'location=yes');
   },
 	
-    //======================================================================================
+  //======================================================================================
   onError: function(reason) {
     console.log("onError() - " + status);
     alert("ERROR: " + status  + reason); // real apps should use notification.alert
@@ -138,7 +142,7 @@ var app = {
     // alert("DONE: " + status + reason); // real apps should use notification.alert
   },
     
-    //======================================================================================
+  //======================================================================================
   refreshDeviceList: function() {
     status = "refreshDeviceList()";    
     console.log(status);
@@ -168,7 +172,7 @@ var app = {
     }
   },
 
-    //======================================================================================
+  //======================================================================================
   tappedList: function(e) {
     console.log("tappedList()");
     advMAC = e.target.dataset.deviceId;
