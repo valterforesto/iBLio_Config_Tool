@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1" />
+    <link rel="stylesheet" type="text/css" href="css/index.css" />
+    <title>iBLio "N in 1" Configuration APP</title> 
+  </head>  
+  <body>
+    <div class="app">
+    
+      <h2>iBLio Config Tool</h2>
+
+      <div id="scanPage">
+        <ul id="scanDeviceList"></ul>
+        <br />
+        <div id="msg" style="color:red;text-align:center;"></div>           
+        <fieldset><legend>Tap the Device on the List or (re)Scan </legend>               
+          <button id="scanRescanButton">&nbsp;&nbsp; (re)Scan &nbsp;&nbsp;</button><br />
+        </fieldset>
+        <br /><br /><br />
+        <center>
+          <p>
+            <img src="iBLio_logo_small.jpg" alt="iBLio" id="openURL"><br />
+            <b>www.iblio.net</b><br />
+            connect@iblio.net<br />
+            <small>[Rel.20160706]</small>
+          </p>
+        </center>
+      </div> 
+			
+			<div id="servicePage">
+      
+				<h3>Services Page</h3>
+        
+        <fieldset><legend>[Access Password Entry]</legend>
+          <input type="password" id="PSW" value="" size="8">&nbsp;&nbsp;&nbsp;&nbsp;
+          <input type="button" onclick="Set_PSW()" value="  Login  "><br />
+        </fieldset><br />
+        <fieldset><legend>Configuration Pages</legend>
+          <button id="accessControlButton">&nbsp;&nbsp; Access Control &nbsp;&nbsp;</button><br />
+          <button id="generalConfigButton">&nbsp;&nbsp; General Config &nbsp;&nbsp;</button><br />
+          <button id="iBeaconButton">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; iBeacon &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button><br />
+          <button id="eddystoneButton">&nbsp;&nbsp;&nbsp;&nbsp; Eddystone(s)&nbsp;&nbsp;&nbsp;&nbsp;</button><br />
+				</fieldset>
+        <button id="exitButton">&nbsp;&nbsp; Exit &nbsp;&nbsp;</button><br />
+      </div>
+	
+      <div id="accessControlPage">
+    
+        <h3>Acces Control Page</h3>
+        
+        <fieldset><legend>Access Control</legend>
+          <select id="access_control" value= "1" >
+            <option value="0">OFF</option>
+            <option value="1">ON</option>
+          </select>
+          &nbsp;&nbsp;&nbsp;&nbsp;<input type="button" onclick="Set_access_control()" value="Set">
+        </fieldset>
+        <fieldset><legend>Access Password</legend>
+          <input type="text" id="access_password" size="8">
+          &nbsp;&nbsp;&nbsp;&nbsp;<input type="button" onclick="Set_password()" value="Set">
+        </fieldset>
+        <fieldset><legend>Access enable at Power ON for 60 sec</legend>
+          <select id="access_power_on" >
+            <option value="0">Disabled</option>
+            <option value="1">Enabled</option>
+          </select>
+          &nbsp;&nbsp;&nbsp;&nbsp;<input type="button" onclick="Set_access_at_poweron()" value="Set">
+        </fieldset>
+        <fieldset><legend>Factory Default</legend>
+          <b style="color:red"> Tap & Wait While Restoring Factory Default </b>
+          <p style="text-align:right" >
+            <input type="button" onclick="Set_factory_default()" value="Confirm" >
+          </p>
+        </fieldset>
+        <button id="exit3Button">&nbsp;&nbsp; Exit &nbsp;&nbsp;</button>
+      </div>
+  
+      <div id="generalConfigPage">
+        
+        <h3>General Config Page</h3>
+        
+        <form id="connParameters">
+        <fieldset><legend>ADV Period</legend>
+          <select id="ADV_period">
+            <option value="0">125 millisec</option>
+            <option value="1">250 millisec</option>
+            <option value="2">500 millisec</option>
+            <option value="3">1000 millisec</option>
+          </select>
+          <input type="button" onclick="Set_ADV_period()" value="Set">
+        </fieldset>
+        <fieldset><legend>Sequencer</legend>
+          <select id="Sequencer">
+            <option value="0">iBeacon/TLM</option>
+            <option value="1">EddystoneURL/TLM</option>
+            <option value="2">EddystoneUID/TLM</option>
+            <option value="3">IoT_Nodes/TLM</option>
+            <option value="4">Mixed All</option>
+            <option value="5">User Defined</option>
+          </select>
+          <input type="button" onclick="Set_Sequencer()" value="Set">
+        </fieldset>
+        <fieldset><legend>Scan Request Control</legend>    
+          <select id="SCAN_Req" >
+            <option value="0">OFF</option>
+            <option value="1">ON</option>
+          </select>
+          <input type="button" onclick="Set_SCAN_Req()" value="Set">
+         </fieldset>
+        <fieldset><legend>Tx Level</legend>
+          <select id="Tx_lev">
+            <option value="0">+ Min all modules</option>
+            <option value="1">++</option>
+            <option value="2">+++</option>
+            <option value="3">++++</option>
+            <option value="4">+++++</option>
+            <option value="5">++++++</option>
+            <option value="6">+++++++</option>
+            <option value="7">++++++++</option>
+            <option value="8">+++++++++</option>
+            <option value="9">+MaxBLE121+</option>
+            <option value="10">+++++++++++</option>
+            <option value="11">++++++++++++</option>
+            <option value="12">+++++++++++++</option>
+            <option value="13">++++++++++++++</option>
+            <option value="14">+++Max BLE113++</option>
+            <option value="15">+++Max BLE112+++</option>
+          </select>
+          <input type="button" onclick="Set_TX_lev()" value="Set">
+        </fieldset>
+        <fieldset><legend>RSSI at 1mt [dBm]</legend>
+          <input type="number" id="RSSI" value="-72" min="-20" max="-80">&nbsp;&nbsp;
+          <input type="button" onclick="Set_RSSI()" value="Set"></br>
+          <b style="color:red"> Enter the value read from a scanner </b>
+        </fieldset>
+        <fieldset><legend>ADV Channels</legend>
+          <select id="ADV_ch">
+            <option value="1">1 ADV Channel</option>
+            <option value="3">2 ADV Channel</option>
+            <option value="7">3 ADV Channel</option>
+          </select>
+          <input type="button" onclick="Set_ADV_ch()" value="Set">
+        </fieldset>
+        </form>
+        <button id="exit2Button">&nbsp;&nbsp; Exit &nbsp;&nbsp;</button>
+      </div>
+                
+      <div id="ibeaconPage">
+        <h3>iBeacon Page</h3>
+        <fieldset><legend>UUID</legend> <!-- definire lunghezza campo -->
+          <input type="text" id="UUID" size="34">
+          <input type="button" onclick="Set_UUID()" value="Set">
+        </fieldset>
+        <fieldset><legend>Major</legend>
+          <input type="number" id="major" min="0" max="65535">
+          <input type="button" onclick="Set_major()" value="Set">
+        </fieldset>
+        <fieldset><legend>Minor</legend>
+          <input type="number" id="minor" min="0" max="65535">
+          <input type="button" onclick="Set_minor()" value="Set">
+        </fieldset>
+        <button id="exit4Button">&nbsp;&nbsp; Exit &nbsp;&nbsp;</button><br /><br />
+      </div>
+        
+      <div id="eddystonePage">
+      
+        <h3>Eddystone Page<br /></h3>
+        
+        <fieldset><legend>URL Schema</legend>
+          <select id="Schema">
+            <option value="0">http://www.</option>
+            <option value="1">https://www.</option>
+            <option value="2">http://</option>
+            <option value="3">https://</option>
+          </select>
+          <input type="button" onclick="Set_schema()" value="Set">
+        </fieldset>
+        <fieldset><legend>Encoded URL</legend>
+          <input type="text" id="URL" size="16">
+          <input type="button" onclick="Set_URL()" value="Set">
+        </fieldset>
+        <fieldset><legend>UID Namespace</legend>
+          <input type="text" id="UID_namespace" size="20">
+          <input type="button" onclick="Set_UID_namespace()" value="Set">
+        </fieldset>
+        <fieldset><legend>UID Instance</legend>
+          <input type="text" id="UID_instance" size="13">
+          <input type="button" onclick="Set_UID_instance()" value="Set">
+        </fieldset>
+        <button id="exit5Button">&nbsp;&nbsp; Exit &nbsp;&nbsp;</button><br /><br />
+      </div>
+			
+    </div>
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+    <script type="text/javascript">
+        app.initialize();
+    </script>
+  </body>
+</html>

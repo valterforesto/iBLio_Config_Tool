@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<widget xmlns       = "http://www.w3.org/ns/widgets"
+        xmlns:gap   = "http://phonegap.com/ns/1.0"
+        id          = "com.phonegap.iblio_config_tool"
+        versionCode = "100" 
+        version     = "1.0.0" >
+
+    <name>iBLio Config Tool</name>
+
+    <description>
+        App for configuration of N in 1 iBLio devices
+    </description>
+
+    <author href="http://www.iblio.net" email="connect@iblio.net">
+        Giovanni Grisotti, Valter Foresto - www.iblio.net
+    </author>
+
+    <icon src="icon.png" />    
+    
+    <platform name="android" />
+	  <platform name="ios" />
+
+    <preference name="orientation" value="portrait" />  
+	  <preference name="phonegap-version" value="cli-6.1.0" />
+	
+    <gap:plugin name="cordova-plugin-ble-central" source="npm" />
+</widget>
