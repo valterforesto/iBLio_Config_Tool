@@ -13,7 +13,7 @@
       <h2>iBLio Config Tool</h2>
 
       <div id="scanPage">
-        <ul id="scanDeviceList"></ul>
+        <ul style="margin: 50px" id="scanDeviceList"></ul>
         <br />
         <div id="msg" style="color:red;text-align:center;"></div>           
         <fieldset><legend>Tap the Device on the List or (re)Scan </legend>               
@@ -25,7 +25,7 @@
             <img src="iBLio_logo_small.jpg" alt="iBLio" id="openURL"><br />
             <b>www.iblio.net</b><br />
             connect@iblio.net<br />
-            <small>[Rel.20160707]</small>
+            <small>[Rel.20160706]</small>
           </p>
         </center>
       </div> 
@@ -33,6 +33,10 @@
 			<div id="servicePage">
       
 				<h3>Services Page</h3>
+        
+        <fieldset>
+        <div id="batteryLevel" style="font-size:130%;color:navy;text-align:center;"></div>
+        </fieldset><br />
         
         <fieldset><legend>[Access Password Entry]</legend>
           <input type="password" id="PSW" value="" size="8">&nbsp;&nbsp;&nbsp;&nbsp;
@@ -72,7 +76,7 @@
         <fieldset><legend>Factory Default</legend>
           <b style="color:red"> Tap & Wait While Restoring Factory Default </b>
           <p style="text-align:right" >
-            <input type="button" onclick="Set_factory_default()" value="Confirm" >
+          <input type="button" onclick="Set_factory_default()" value="Confirm" >
           </p>
         </fieldset>
         <button id="exit3Button">&nbsp;&nbsp; Exit &nbsp;&nbsp;</button>
@@ -98,8 +102,9 @@
             <option value="1">EddystoneURL/TLM</option>
             <option value="2">EddystoneUID/TLM</option>
             <option value="3">IoT_Nodes/TLM</option>
-            <option value="4">Mixed All</option>
-            <option value="5">User Defined</option>
+            <option value="4">IoT_Nodes/URL</option>
+            <option value="5">Mixed All</option>
+            <option value="6">User Defined</option>
           </select>
           <input type="button" onclick="Set_Sequencer()" value="Set">
         </fieldset>
@@ -109,7 +114,7 @@
             <option value="1">ON</option>
           </select>
           <input type="button" onclick="Set_SCAN_Req()" value="Set">
-         </fieldset>
+        </fieldset>
         <fieldset><legend>Tx Level</legend>
           <select id="Tx_lev">
             <option value="0">+ Min all modules</option>
