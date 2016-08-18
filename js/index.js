@@ -32,7 +32,6 @@ function advScanFunc() {
   advTimer = setTimeout(advScanFunc, 600); 
 }
     
-//----------------------------------------------------------------
 var app = {
   initialize: function() {
     console.log("initialize()");
@@ -49,20 +48,17 @@ var app = {
     console.log("bindEvents()");
     document.addEventListener('deviceready', this.onDeviceReady, false);
     openURL.addEventListener('touchend', this.tappedImage, false);
-
     iBeaconButton.addEventListener('touchend', this.ibeaconPage, false);
     eddystoneButton.addEventListener('touchend', this.eddystonePage, false);
     accessControlButton.addEventListener('touchend', this.accessControlPage, false);
     generalConfigButton.addEventListener('touchend', this.generalConfigPage, false);
-
     exit5Button.addEventListener('touchend', this.servicePage, false);
     exit4Button.addEventListener('touchend', this.servicePage, false);
     exit3Button.addEventListener('touchend', this.servicePage, false);
     exit2Button.addEventListener('touchend', this.servicePage, false);
     exitButton.addEventListener('touchend', this.disconnect, false);
-
-    scanRescanButton.addEventListener('touchstart', this.refreshDeviceList, false);
-    scanDeviceList.addEventListener('touchstart', this.tappedList, false);
+    scanRescanButton.addEventListener('touchend', this.refreshDeviceList, false);
+    scanDeviceList.addEventListener('touchend', this.tappedList, false);
   },
 
 	generalConfigPage: function() {
@@ -131,7 +127,7 @@ var app = {
     var ref = window.open('http://www.iblio.net', '_blank', 'location=yes');
   },
 	
-  //======================================================================================
+    //======================================================================================
   onError: function(reason) {
     console.log("onError() - " + status);
     alert("ERROR: " + status  + reason); // real apps should use notification.alert
@@ -142,7 +138,7 @@ var app = {
     // alert("DONE: " + status + reason); // real apps should use notification.alert
   },
     
-  //======================================================================================
+    //======================================================================================
   refreshDeviceList: function() {
     status = "refreshDeviceList()";    
     console.log(status);
@@ -172,7 +168,7 @@ var app = {
     }
   },
 
-  //======================================================================================
+    //======================================================================================
   tappedList: function(e) {
     console.log("tappedList()");
     advMAC = e.target.dataset.deviceId;
@@ -181,7 +177,7 @@ var app = {
       document.getElementById('msg').innerHTML = '<p><b>Please (re)Tap the Device on the List</b></p>';
     }
     else 
-		  app.connect();
+		app.connect();
   },
 
     //======================================================================================
@@ -214,6 +210,7 @@ var app = {
       accessControlPage.hidden = true;
       ibeaconPage.hidden = true;
       eddystonePage.hidden = true;
+      read_Battery_Level();
     };
     ble.stopScan(app.onDone, app.onError);
     ble.connect(advMAC, onConnect, app.onDisconnection);
@@ -254,6 +251,7 @@ var general = {
   level:        "EE0C0101-8786-40BA-AB96-99B91AC981D8",
   rssi:         "EE0C0102-8786-40BA-AB96-99B91AC981D8",
   advch:        "EE0C0103-8786-40BA-AB96-99B91AC981D8",
+  battLev:      "EE0C0108-8786-40BA-AB96-99B91AC981D8",
 };
 
 var ibeacon = {
@@ -311,7 +309,7 @@ function Set_Sequencer() {
   console.log(status);
   var value = document.getElementById("Sequencer").value;
   console.log (value);
-  if (value > 4) {return;} 
+  if (value > 5) {return;} 
   var s1 = seq_type[value];
   console.log(s1);
   var val = str2ab(s1);
@@ -513,20 +511,20 @@ function Set_URL() {
 function Set_UID_namespace() {
   status = "Set_UID_namespace()";  
   console.log(status);
-  var value = document.getElementById("UID_namespace").value;
+  var value = document.getElementById("UID_namespace").value; //leggo da HTML
   console.log(value);
   if (value.length != 20) {
-    alert("ERROR UID Namespace must be 20 Bytes"); return;
+    alert("ERROR UID Namespace must be 20 Bytes"); return; //controllo la lunghezza
   }
-  var a = value.toUpperCase();
+  var a = value.toUpperCase(); //metto in maiuscolo
   console.log(a);
-  var val = str2ab(a);
+  var val = str2ab(a); //converto in array buffer
   console.log(val);
-  var v0 = new DataView(val);
+  var v0 = new DataView(val); //passo l'array buffer al dataview
   var i;
   var d;
   for (i=0; i<20; i++) {
-	d = v0.getUint8(i);
+	d = v0.getUint8(i); //ceo l'array uint8 a 20 bytes
 	console.log(d);
     if ( ((d < 0x30) || (d > 0x39)) && ((d < 0x41) || (d > 0x46)) ) {
       alert("ERROR input must be hexadecimal"); return; 
@@ -698,6 +696,7 @@ var seq_type = ["0000000000000003",
                 "2222222222222223",
                 "1111111111111113",
                 "5555555555555553",
+                "5555255552555523",
                 "0302050204020502"];
 function Read_Sequencer() {
   status = "Read_Sequencer()";	
@@ -869,4 +868,15 @@ function UpdateUI_Read_URL(val) {
   var s1 = ab2str(val);
   console.log(s1);
   document.getElementById("URL").value = s1;
+}
+
+function read_Battery_Level() {
+  status = "read_Battery_Level()";
+  console.log(status);
+  ble.read(advMAC, general.service, general.battLev, UpdateUI_Battery_Level, app.onDone, app.onError);
+}
+function UpdateUI_Battery_Level(val) {
+  console.log(val);
+  var x = new DataView(val, 0);
+  document.getElementById('batteryLevel').innerHTML = '<p><b>Battery Level is &nbsp;' + x.getUint16(0, true) + '&nbsp; mV</b></p>';
 }
