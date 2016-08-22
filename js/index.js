@@ -150,6 +150,7 @@ var app = {
 	  eddystonePage.hidden = true;
     scanDeviceList.innerHTML = '';
 	  document.getElementById('msg').innerHTML = '';
+	  document.getElementById('msg2').innerHTML = '';
     //clearInterval(advTimer);
     //ble.stopScan(app.onDone, app.onError); //insert from ADV return
     ble.scan([], 16, app.onDiscoverDevice, app.onError);
@@ -176,7 +177,9 @@ var app = {
     if(advMAC == null) {
       document.getElementById('msg').innerHTML = '<p><b>Please (re)Tap the Device on the List</b></p>';
     }
-    else 
+    else {
+      document.getElementById('msg2').innerHTML = '<p><b>Connecting... Please wait</b></p>';
+    }
 		app.connect();
   },
 
